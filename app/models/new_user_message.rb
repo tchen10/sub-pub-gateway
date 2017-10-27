@@ -1,15 +1,15 @@
 class NewUserMessage
   include ActiveModel::Validations
 
-  attr_reader :email, :account_key
+  attr_reader :email, :key
 
   validates :email, presence: true
-  validates :account_key, presence: true
+  validates :key, presence: true
 
   def create_from_json(message)
     message = JSON.parse(message)
     @email = message['email']
-    @account_key = message['account_key']
+    @key = message['key']
     self
   end
 end

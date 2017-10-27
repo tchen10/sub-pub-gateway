@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe UserKeyWorker do
+RSpec.describe NewUserWorker do
   describe '.perform' do
     email = 'user@email.com'
     key = 'random key'
@@ -13,15 +13,15 @@ RSpec.describe UserKeyWorker do
     it 'calls gateway with email and key' do
       expect(@account_key_gateway).to receive(:account_key_for).with(email, key)
 
-      UserKeyWorker.new.perform email, key
+      NewUserWorker.new.perform email, key
     end
 
     context 'when there is a gateway error' do
       it 'reschedules job to run in 10 minutes' do
         expect(@account_key_gateway).to receive(:account_key_for).with(email, key)
                                           .and_raise(GatewayError)
-        expect(UserKeyWorker).to receive(:perform_in).with(10.minutes, email, key)
-        UserKeyWorker.new.perform email, key
+        expect(NewUserWorker).to receive(:perform_in).with(10.minutes, email, key)
+        NewUserWorker.new.perform email, key
       end
     end
 
@@ -29,7 +29,7 @@ RSpec.describe UserKeyWorker do
       it 'logs the error' do
         expect(@account_key_gateway).to receive(:account_key_for).with(email, key)
                                           .and_raise(ActiveRecord::RecordNotFound)
-        UserKeyWorker.new.perform email, key
+        NewUserWorker.new.perform email, key
       end
     end
 
@@ -37,7 +37,7 @@ RSpec.describe UserKeyWorker do
       it 'does not retry the job' do
         expect(@account_key_gateway).to receive(:account_key_for).with(email, key)
                                           .and_raise(ActiveRecord::RecordNotFound)
-        UserKeyWorker.new.perform email, key
+        NewUserWorker.new.perform email, key
       end
     end
   end
