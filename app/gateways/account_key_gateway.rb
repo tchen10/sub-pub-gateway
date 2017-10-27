@@ -14,9 +14,9 @@ class AccountKeyGateway
 
     case response.code
       when (200..201)
-        body = JSON.parse(response.body)
-        raise GatewayError.new(self.class.name, response.inspect) if body['email'].nil? || body['account_key'].nil?
-        return body
+        response_body = AccountKeyResponse.new.create_from_json(JSON.parse(response.body))
+        raise GatewayError.new(self.class.name, response.inspect) unless response_body.valid?
+        return response_body
       else
         raise GatewayError.new(self.class.name, response.inspect)
     end
