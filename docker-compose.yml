@@ -1,15 +1,6 @@
 version: '3'
 
 services:
-  app:
-    build: .
-    command: bundle exec rails s -p 6000 -b '0.0.0.0'
-    volumes:
-      - .:/app
-    env_file:
-      - '.env'
-    ports:
-      - '6000:6000'
   sneakers:
     build: .
     command: bundle exec rake sneakers:run
@@ -17,5 +8,3 @@ services:
       - .:/app
     env_file:
       - '.env'
-    depends_on:
-      - app
