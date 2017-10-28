@@ -1,7 +1,7 @@
 version: '3'
 
 services:
-  sneakers:
+  gateway:
     build: .
     command: bundle exec rake sneakers:run
     volumes:
