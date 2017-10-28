@@ -10,12 +10,12 @@ class AccountKeyGateway
     }
 
     Rails.logger.info "AccountKeyGateway#POST with #{body}"
-    response = self.class.post('/v1/account', body: body)
+    response = self.class.post '/v1/account', body: body
 
     Rails.logger.info "AccountKeyGateway#POST response: #{response.inspect}"
     case response.code
       when (200..201)
-        response_body = AccountKeyResponse.new.create_from_json(response.body)
+        response_body = AccountKeyResponse.new.create_from_json response.body
         raise GatewayError.new(self.class.name, response.inspect) unless response_body.valid?
         return response_body
       else

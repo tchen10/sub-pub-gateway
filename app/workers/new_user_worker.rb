@@ -11,19 +11,14 @@ class NewUserWorker
 
       response = AccountKeyGateway.new.account_key_for message.email, message.key
 
-      EventPublisher.new('account_keys', response)
+      EventPublisher.new('account_keys', response).publish
+
       ack!
     rescue MissingAttributeError => e
       Sneakers.logger.info "#{self.class.name} Message received is missing required attributes. #{msg}"
       reject!
     rescue GatewayError => gateway
       Sneakers.logger.info "#{self.class.name} Failed to retrieve account key. Message requeued. #{gateway.message}"
-      reject!
-    rescue Bunny::TCPConnectionFailed => e
-      Sneakers.logger.info "#{self.class.name} Connection to message queue at #{ENV['MESSAGE_QUEUE_URL']} failed. #{e}"
-      reject!
-    rescue Bunny::PossibleAuthenticationFailureError => e
-      Sneakers.logger.info "#{self.class.name} Connection to message queue at #{ENV['MESSAGE_QUEUE_URL']} failed. #{e}"
       reject!
     end
   end

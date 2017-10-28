@@ -18,7 +18,9 @@ RSpec.describe AccountKeyGateway do
                                        .and_return(response_double)
 
         response = AccountKeyGateway.new.account_key_for(email, key)
-        expect(response).to eq(AccountKeyReponse.new(email: email, account_key: account_key))
+
+        expect(response.email).to eq email
+        expect(response.account_key).to eq account_key
       end
     end
 
