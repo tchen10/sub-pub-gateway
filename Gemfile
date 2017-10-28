@@ -5,8 +5,8 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-
 gem 'rails', '~> 5.1.1'
+gem 'sqlite3'
 gem 'puma', '~> 3.7'
 gem 'httparty'
 gem 'bunny', '~> 2.7.0'
@@ -15,8 +15,6 @@ gem 'sneakers'
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'rspec-rails'
-  gem 'shoulda-matchers', '~> 3.1'
-  gem 'factory_bot_rails'
   gem 'pry'
 end
 
