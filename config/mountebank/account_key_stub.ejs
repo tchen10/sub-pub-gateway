@@ -1,0 +1,77 @@
+{
+  "port": 9001,
+  "protocol": "http",
+  "stubs": [
+    {
+      "predicates": [
+        {
+          "equals": {
+            "method": "POST",
+            "path": "/v1/account",
+            "body": {
+              "email": "user1@email.com",
+              "key": "1_key"
+            }
+          }
+        }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 200,
+            "headers": {
+              "Content-Type": "application/json"
+            },
+            "body": {
+              "email": "user1@email.com",
+              "account_key": "1_account_key"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "predicates": [
+        {
+          "equals": {
+            "method": "POST",
+            "path": "/v1/account",
+            "body": {
+              "email": "user2@email.com",
+              "key": "2_key"
+            }
+          }
+        }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 200,
+            "headers": {
+              "Content-Type": "application/json"
+            },
+            "body": {
+              "email": "user2@email.com",
+              "account_key": "2_account_key"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "responses": [
+        {
+          "is": {
+            "statusCode": 200,
+            "headers": {
+              "Content-Type": "application/json"
+            },
+            "body": {
+              "error": "Service is unavailable"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
