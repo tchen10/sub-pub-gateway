@@ -67,7 +67,18 @@ To run Mountebank with the configured stubs:
 ```
 
 Once Mountebank is running, you can go to `localhost:2525` to view the Mountebank help documentation.
-Our stubbed service lives at `localhost:9001/v1/account`.  To point the application to the stub, you can 
+Our stubbed service lives at `localhost:9001/v1/account`.  To point the application to the stub, change the ACCOUNT_KEY_SERVICE environment variable.
+
+```
+# In the .env file, point this environment variable to your stub 
+
+#Instead of this:
+ACCOUNT_KEY_SERVICE=https://account-key-service.herokuapp.com
+
+#Use this: 
+ACCOUNT_KEY_SERVICE=http://localhost:9001
+``` 
+This is not an ideal set up, further work should be done to automate this.
 
 There are a few simple stubs in available:
 
